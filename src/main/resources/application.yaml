@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: ApiGatewayApplication
+
+  cloud:
+    gateway:
+      routes:
+        - id: product-public
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/products/all,/api/products/{id}
+
+        - id: product-secure
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/products/**
+
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:4200"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - Authorization
+              - Content-Type
+              - X-Requested-With
+              - X-User-Id
+              - X-Email
+            exposedHeaders:
+              - X-User-Id
+              - X-Email
+            allowCredentials: true
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
