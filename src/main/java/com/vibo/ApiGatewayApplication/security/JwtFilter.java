@@ -48,7 +48,8 @@ public class JwtFilter implements GlobalFilter {
             if (path.startsWith("/auth")
                     || path.startsWith("/oauth2")
                     || (path.startsWith("/products")
-                    && exchange.getRequest().getMethod().matches("GET"))) {
+                    && exchange.getRequest().getMethod().matches("GET"))
+                    || path.startsWith("/payments/webhook")) {
                 return chain.filter(exchange);
             }
 

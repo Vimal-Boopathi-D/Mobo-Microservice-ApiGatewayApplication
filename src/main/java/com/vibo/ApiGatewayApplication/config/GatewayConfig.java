@@ -29,11 +29,14 @@ public class GatewayConfig{
                         r.path("/api/cart/**")
                                 .uri("http://localhost:8082"))
                 .route("payment-service",r->
-                        r.path("/api/payment")
+                        r.path("/api/payment/**")
                                 .uri("http://localhost:8083"))
+                .route("order-service",r->
+                        r.path("/api/orders/**")
+                                .uri("http://localhost:8084"))
                 .route("ai-chat-service",r->
                         r.path("/api/ai/**")
-                                .uri("http://localhost:8084"))
+                                .uri("http://localhost:8085"))
                 .build();
     }
 
@@ -48,7 +51,7 @@ public class GatewayConfig{
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
 
-        return new CorsWebFilter(source);
+        return  new CorsWebFilter(source);
     }
 
 }
